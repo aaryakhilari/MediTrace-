@@ -173,10 +173,8 @@ function generateMedicineQR(batchId) {
 
     qrContainer.innerHTML = "";
 
-    const baseUrl = window.location.href
-        .split("?")[0]
-        .split("#")[0];
-
+    const baseUrl = "https://aaryakhilari.github.io/MediTrace-";
+    
     const verificationUrl =
         `${baseUrl}?batch=${encodeURIComponent(batchId)}#verify`;
 
