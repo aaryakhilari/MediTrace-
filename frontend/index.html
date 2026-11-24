@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrace | Medicine Tracking & Certificate Verification</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><span class="logo-icon">✚</span><span>MediTrace</span></div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#register">Register Medicine</a>
+        <a href="#certificate">Issue Certificate</a>
+        <a href="#verify">Verify Medicine</a>
+    </nav>
+    <button id="connectWalletBtn" class="wallet-btn" type="button">Connect Wallet</button>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <p class="tagline">BLOCKCHAIN-POWERED MEDICINE TRACKING</p>
+        <h1>Every Medicine Has a Story. <span>Track It. Trust It.</span></h1>
+        <p class="hero-description">
+            MediTrace records medicine batches and manufacturer-issued certificates
+            on Ethereum Sepolia. Public verification does not require a wallet.
+        </p>
+        <div class="hero-buttons">
+            <a href="#verify" class="primary-btn">Verify Medicine</a>
+            <a href="#register" class="secondary-btn">Register Batch</a>
+        </div>
+        <div class="network-info"><span class="status-dot"></span>Ethereum Sepolia Testnet</div>
+    </div>
+    <div class="hero-visual">
+        <div class="medical-circle">
+            <div class="medical-cross">✚</div>
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="floating-pill">💊</div>
+            <div class="floating-shield">🛡️</div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <h3>Blockchain Records</h3>
+        <p>Medicine batch and certificate records are anchored on Ethereum.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>Batch Tracking</h3>
+        <p>View the recorded supply-chain stage of a medicine batch.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>Certificate Verification</h3>
+        <p>Open the public certificate file and view its recorded SHA-256 hash.</p>
+    </div>
+</section>
+
+<!-- REGISTER MEDICINE -->
+<section class="section" id="register">
+    <div class="section-heading">
+        <p class="tagline">MANUFACTURER PANEL</p>
+        <h2>Register New Medicine</h2>
+        <p>Add a medicine batch to the existing MedicineTracker contract.</p>
+    </div>
+
+    <div class="form-card">
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="batchId">Batch ID</label>
+                <input type="text" id="batchId" placeholder="Example: MED001" required>
+            </div>
+            <div class="form-group">
+                <label for="medicineName">Medicine Name</label>
+                <input type="text" id="medicineName" placeholder="Enter medicine name" required>
+            </div>
+            <div class="form-group">
+                <label for="manufacturer">Manufacturer</label>
+                <input type="text" id="manufacturer" placeholder="Enter manufacturer name" required>
+            </div>
+            <div class="form-group">
+                <label for="manufacturingDate">Manufacturing Date</label>
+                <input type="date" id="manufacturingDate" required>
+            </div>
+            <div class="form-group">
+                <label for="expiryDate">Expiry Date</label>
+                <input type="date" id="expiryDate" required>
+            </div>
+            <button type="submit" class="primary-btn full-btn">Register on Blockchain</button>
+        </form>
+
+        <p id="registerMessage" class="message" aria-live="polite"></p>
+
+        <div id="qrCodeSection" class="qr-section" hidden>
+            <h3>Medicine QR Code Generated</h3>
+            <p>Scan this QR code to open public batch verification.</p>
+            <div id="qrcode"></div>
+            <p id="qrBatchId"></p>
+            <button type="button" id="downloadQRBtn" class="primary-btn">Download QR Code</button>
+        </div>
+    </div>
+</section>
+
+<!-- SUPPLY CHAIN UPDATE -->
+<section class="section alternate-section" id="update">
+    <div class="section-heading">
+        <p class="tagline">SUPPLY CHAIN MANAGEMENT</p>
+        <h2>Update Medicine Stage</h2>
+        <p>Update the journey of a registered medicine batch.</p>
+    </div>
+
+    <div class="form-card">
+        <form id="updateForm">
+            <div class="form-group">
+                <label for="updateBatchId">Batch ID</label>
+                <input type="text" id="updateBatchId" placeholder="Enter registered Batch ID" required>
+            </div>
+            <div class="form-group">
+                <label for="newStage">New Supply Chain Stage</label>
+                <select id="newStage" required>
+                    <option value="">Select current stage</option>
+                    <option value="Manufactured">Manufactured</option>
+                    <option value="In Transit">In Transit</option>
+                    <option value="At Distributor">At Distributor</option>
+                    <option value="At Pharmacy">At Pharmacy</option>
+                    <option value="Delivered">Delivered</option>
+                </select>
+            </div>
+            <button type="submit" class="primary-btn full-btn">Update Blockchain Record</button>
+        </form>
+        <p id="updateMessage" class="message" aria-live="polite"></p>
+    </div>
+</section>
+
+<!-- ISSUE CERTIFICATE -->
+<section class="section" id="certificate">
+    <div class="section-heading">
+        <p class="tagline">MANUFACTURER CERTIFICATE PANEL</p>
+        <h2>Issue Medicine Certificate</h2>
+        <p>Upload a PDF to IPFS, then record its CID and SHA-256 hash on the certificate registry.</p>
+    </div>
+
+    <div class="form-card">
+        <form id="certificateForm">
+            <div class="form-group">
+                <label for="certificateBatchId">Registered Medicine Batch ID</label>
+                <input type="text" id="certificateBatchId" placeholder="Example: MED001" required>
+            </div>
+            <div class="form-group">
+                <label for="certificateNumber">Certificate Number</label>
+                <input type="text" id="certificateNumber" placeholder="Example: COA-2026-001" required>
+            </div>
+            <div class="form-group">
+                <label for="certificateType">Certificate Type</label>
+                <select id="certificateType" required>
+                    <option value="">Select certificate type</option>
+                    <option value="Certificate of Analysis (CoA)">Certificate of Analysis (CoA)</option>
+                    <option value="Manufacturing Certificate">Manufacturing Certificate</option>
+                    <option value="Quality Certificate">Quality Certificate</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="certificatePdf">Certificate PDF (maximum 10 MB)</label>
+                <input type="file" id="certificatePdf" accept="application/pdf,.pdf" required>
+            </div>
+            <button type="submit" class="primary-btn full-btn">Upload & Record Certificate</button>
+        </form>
+
+        <p id="certificateMessage" class="message" aria-live="polite"></p>
+        <p class="message">Only a wallet authorized by the registry administrator can issue a certificate. The PDF is public on IPFS.</p>
+    </div>
+</section>
+
+<!-- AUTHORIZE MANUFACTURER -->
+<section class="section alternate-section" id="manufacturerAdmin">
+    <div class="section-heading">
+        <p class="tagline">REGISTRY ADMINISTRATOR</p>
+        <h2>Authorize Manufacturer Wallet</h2>
+        <p>Only the certificate registry owner can approve or remove manufacturer wallets.</p>
+    </div>
+
+    <div class="form-card">
+        <form id="authorizationForm">
+            <div class="form-group">
+                <label for="manufacturerWallet">Manufacturer Wallet Address</label>
+                <input type="text" id="manufacturerWallet" placeholder="0x..." required>
+            </div>
+            <div class="form-group">
+                <label for="authorizationAction">Action</label>
+                <select id="authorizationAction" required>
+                    <option value="true">Authorize wallet</option>
+                    <option value="false">Remove authorization</option>
+                </select>
+            </div>
+            <button type="submit" class="primary-btn full-btn">Update Manufacturer Authorization</button>
+        </form>
+        <p id="authorizationMessage" class="message" aria-live="polite"></p>
+    </div>
+</section>
+
+<!-- PUBLIC MEDICINE AND CERTIFICATE VERIFICATION -->
+<section class="section" id="verify">
+    <div class="section-heading">
+        <p class="tagline">PUBLIC CUSTOMER VERIFICATION</p>
+        <h2>Verify Your Medicine</h2>
+        <p>Enter or scan a Batch ID. You do not need MetaMask to verify records.</p>
+    </div>
+
+    <div class="form-card">
+        <form id="verifyForm">
+            <div class="form-group">
+                <label for="verifyBatchId">Medicine Batch ID</label>
+                <input type="text" id="verifyBatchId" placeholder="Enter Batch ID" required>
+            </div>
+            <button type="submit" class="primary-btn full-btn">Verify Medicine</button>
+        </form>
+
+        <p id="verifyMessage" class="message" aria-live="polite"></p>
+
+        <div id="medicineResult" class="result-card" hidden>
+            <h3>Medicine Details</h3>
+            <div class="result-row"><span>Batch ID</span><strong id="resultBatchId">-</strong></div>
+            <div class="result-row"><span>Medicine Name</span><strong id="resultMedicineName">-</strong></div>
+            <div class="result-row"><span>Manufacturer</span><strong id="resultManufacturer">-</strong></div>
+            <div class="result-row"><span>Manufacturing Date</span><strong id="resultManufacturingDate">-</strong></div>
+            <div class="result-row"><span>Expiry Date</span><strong id="resultExpiryDate">-</strong></div>
+            <div class="result-row"><span>Current Stage</span><strong id="resultStage">-</strong></div>
+            <div class="result-row"><span>Medicine Status</span><strong id="resultStatus">-</strong></div>
+        </div>
+
+        <div id="certificateResult" class="result-card" hidden>
+            <h3>Certificate Record</h3>
+            <div class="result-row"><span>Certificate Number</span><strong id="resultCertificateNumber">-</strong></div>
+            <div class="result-row"><span>Certificate Type</span><strong id="resultCertificateType">-</strong></div>
+            <div class="result-row"><span>Issued By</span><strong id="resultCertificateIssuer">-</strong></div>
+            <div class="result-row"><span>Issued At</span><strong id="resultCertificateDate">-</strong></div>
+            <div class="result-row"><span>Certificate Status</span><strong id="resultCertificateStatus">-</strong></div>
+            <div class="result-row"><span>SHA-256</span><strong id="resultCertificateHash" style="word-break:break-all;">-</strong></div>
+            <p><a id="certificateFileLink" href="#" target="_blank" rel="noopener">Open certificate PDF on IPFS ↗</a></p>
+        </div>
+
+        <p id="noCertificateMessage" class="message" hidden>No certificate has been recorded for this batch.</p>
+    </div>
+</section>
+
+<!-- REVOKE CERTIFICATE -->
+<section class="section alternate-section" id="revoke">
+    <div class="section-heading">
+        <p class="tagline">CERTIFICATE CONTROL</p>
+        <h2>Revoke Certificate</h2>
+        <p>The certificate issuer or registry owner can revoke an existing certificate.</p>
+    </div>
+
+    <div class="form-card">
+        <form id="revokeCertificateForm">
+            <div class="form-group">
+                <label for="revokeBatchId">Batch ID</label>
+                <input type="text" id="revokeBatchId" placeholder="Enter batch ID" required>
+            </div>
+            <button type="submit" class="primary-btn full-btn">Revoke Certificate</button>
+        </form>
+        <p id="revokeMessage" class="message" aria-live="polite"></p>
+    </div>
+</section>
+
+<!-- TRANSACTION HISTORY -->
+<section class="section alternate-section" id="history">
+    <div class="section-heading">
+        <p class="tagline">ETHEREUM BLOCKCHAIN RECORDS</p>
+        <h2>Transaction History</h2>
+        <p>Transactions made from this browser are listed below.</p>
+    </div>
+
+    <div class="history-card">
+        <div class="history-item">
+            <div>
+                <h3>Medicine Registration</h3>
+                <p>Batch ID: MED001</p>
+                <small>Transaction Hash</small>
+                <code>0x09a6545582a5e50a651f030ff4cfaaef01ddd403fbb107273c943752d57f5832</code>
+            </div>
+            <div class="history-action">
+                <span class="history-status">Confirmed</span>
+                <a href="https://sepolia.etherscan.io/tx/0x09a6545582a5e50a651f030ff4cfaaef01ddd403fbb107273c943752d57f5832" target="_blank" rel="noopener">View on Etherscan ↗</a>
+            </div>
+        </div>
+
+        <div class="history-item">
+            <div>
+                <h3>Supply Chain Update</h3>
+                <p>Batch ID: MED001 | Stage: In Transit</p>
+                <small>Transaction Hash</small>
+                <code>0xaf493bf6da0c1282fd7f921dff3c15d9716c1cfc0c7475dfd42d28e563e7f41e</code>
+            </div>
+            <div class="history-action">
+                <span class="history-status">Confirmed</span>
+                <a href="https://sepolia.etherscan.io/tx/0xaf493bf6da0c1282fd7f921dff3c15d9716c1cfc0c7475dfd42d28e563e7f41e" target="_blank" rel="noopener">View on Etherscan ↗</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="logo"><span class="logo-icon">✚</span><span>MediTrace</span></div>
+    <p>Medicine batch records and certificate references on blockchain.</p>
+    <p class="copyright">© 2026 MediTrace | Academic Project</p>
+    <p class="copyright">
+        Prototype notice: blockchain records and uploaded PDFs do not independently
+        prove that a physical medicine is genuine, safe, or regulator-approved.
+    </p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="abi.js"></script>
+<script src="certificate-abi.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
