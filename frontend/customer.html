@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101d32">
+    <title>MediTrace | Customer Verification</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+</head>
+<body class="customer-mode">
+    <header class="customer-header">
+        <div class="logo">
+            <span class="logo-icon">+</span>
+            <span>MediTrace</span>
+        </div>
+        <span class="customer-header-label">Medicine Verification</span>
+    </header>
+
+    <main class="section customer-page">
+        <div class="section-heading">
+            <p class="tagline">CUSTOMER VERIFICATION</p>
+            <h1>Medicine Details</h1>
+        </div>
+
+        <div class="form-card customer-card">
+            <p id="customerMessage" class="message" role="status" aria-live="polite">Loading medicine details…</p>
+
+            <section id="medicineResult" class="result-card" hidden>
+                <h2>Medicine</h2>
+                <div class="result-row"><span>Batch ID</span><strong id="resultBatchId">-</strong></div>
+                <div class="result-row"><span>Medicine Name</span><strong id="resultMedicineName">-</strong></div>
+                <div class="result-row"><span>Manufacturer</span><strong id="resultManufacturer">-</strong></div>
+                <div class="result-row"><span>Manufacturing Date</span><strong id="resultManufacturingDate">-</strong></div>
+                <div class="result-row"><span>Expiry Date</span><strong id="resultExpiryDate">-</strong></div>
+                <div class="result-row"><span>Supply Chain Stage</span><strong id="resultStage">-</strong></div>
+                <div class="result-row"><span>Medicine Status</span><strong id="resultStatus">-</strong></div>
+            </section>
+
+            <section id="certificateResult" class="result-card" hidden>
+                <h2>Certificate</h2>
+                <div class="result-row"><span>Certificate Number</span><strong id="resultCertificateNumber">-</strong></div>
+                <div class="result-row"><span>Certificate Type</span><strong id="resultCertificateType">-</strong></div>
+                <div class="result-row"><span>Issuer</span><strong id="resultCertificateIssuer">-</strong></div>
+                <div class="result-row"><span>Issue Date</span><strong id="resultCertificateDate">-</strong></div>
+                <div class="result-row"><span>Certificate Status</span><strong id="resultCertificateStatus">-</strong></div>
+                <div class="result-row"><span>Document Hash</span><strong id="resultCertificateHash">-</strong></div>
+                <p class="certificate-link-row"><a id="certificateFileLink" href="#" target="_blank" rel="noopener">Open Certificate PDF</a></p>
+                <div class="customer-download-actions">
+                    <button type="button" id="downloadCertificateBtn" class="primary-btn full-btn">Download Certificate PDF</button>
+                    <button type="button" id="downloadDetailsBtn" class="secondary-btn full-btn">Download Medicine and Certificate Details</button>
+                </div>
+            </section>
+
+            <p id="noCertificateMessage" class="message" hidden>No certificate has been recorded for this batch.</p>
+        </div>
+    </main>
+
+    <script src="abi.js"></script>
+    <script src="certificate-abi.js"></script>
+    <script src="customer.js"></script>
+</body>
+</html>

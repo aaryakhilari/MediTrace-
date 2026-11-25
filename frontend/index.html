@@ -9,7 +9,14 @@
 </head>
 <body>
 
-<header class="navbar">
+<header class="customer-header">
+    <div class="logo">
+        <span class="logo-icon">✚</span>
+        <span>MediTrace</span>
+    </div>
+    <span class="customer-header-label">Medicine Verification</span>
+</header>
+<header class="navbar manufacturer-only">
     <div class="logo"><span class="logo-icon">✚</span><span>MediTrace</span></div>
     <nav>
         <a href="#home">Home</a>
@@ -20,7 +27,7 @@
     <button id="connectWalletBtn" class="wallet-btn" type="button">Connect Wallet</button>
 </header>
 
-<section class="hero" id="home">
+<section class="hero manufacturer-only" id="home">
     <div class="hero-content">
         <p class="tagline">BLOCKCHAIN-POWERED MEDICINE TRACKING</p>
         <h1>Every Medicine Has a Story. <span>Track It. Trust It.</span></h1>
@@ -45,7 +52,7 @@
     </div>
 </section>
 
-<section class="features">
+<section class="features manufacturer-only">
     <div class="feature-card">
         <div class="feature-icon">🔐</div>
         <h3>Blockchain Records</h3>
@@ -64,7 +71,7 @@
 </section>
 
 <!-- REGISTER MEDICINE -->
-<section class="section" id="register">
+<section class="section manufacturer-only" id="register">
     <div class="section-heading">
         <p class="tagline">MANUFACTURER PANEL</p>
         <h2>Register New Medicine</h2>
@@ -109,7 +116,7 @@
 </section>
 
 <!-- SUPPLY CHAIN UPDATE -->
-<section class="section alternate-section" id="update">
+<section class="section alternate-section manufacturer-only" id="update">
     <div class="section-heading">
         <p class="tagline">SUPPLY CHAIN MANAGEMENT</p>
         <h2>Update Medicine Stage</h2>
@@ -140,7 +147,7 @@
 </section>
 
 <!-- ISSUE CERTIFICATE -->
-<section class="section" id="certificate">
+ <section class="section manufacturer-only" id="certificate">
     <div class="section-heading">
         <p class="tagline">MANUFACTURER CERTIFICATE PANEL</p>
         <h2>Issue Medicine Certificate</h2>
@@ -180,7 +187,7 @@
 </section>
 
 <!-- AUTHORIZE MANUFACTURER -->
-<section class="section alternate-section" id="manufacturerAdmin">
+<section class="section alternate-section manufacturer-only" id="manufacturerAdmin">
     <div class="section-heading">
         <p class="tagline">REGISTRY ADMINISTRATOR</p>
         <h2>Authorize Manufacturer Wallet</h2>
@@ -235,6 +242,13 @@
             <div class="result-row"><span>Current Stage</span><strong id="resultStage">-</strong></div>
             <div class="result-row"><span>Medicine Status</span><strong id="resultStatus">-</strong></div>
         </div>
+     <button
+        type="button"
+        id="showCertificateBtn"
+        class="primary-btn full-btn"
+        hidden>
+        Verify Certificate
+    </button>
 
         <div id="certificateResult" class="result-card" hidden>
             <h3>Certificate Record</h3>
@@ -252,7 +266,7 @@
 </section>
 
 <!-- REVOKE CERTIFICATE -->
-<section class="section alternate-section" id="revoke">
+<section class="section alternate-section manufacturer-only" id="revoke">
     <div class="section-heading">
         <p class="tagline">CERTIFICATE CONTROL</p>
         <h2>Revoke Certificate</h2>
@@ -272,7 +286,7 @@
 </section>
 
 <!-- TRANSACTION HISTORY -->
-<section class="section alternate-section" id="history">
+<section class="section alternate-section manufacturer-only" id="history">
     <div class="section-heading">
         <p class="tagline">ETHEREUM BLOCKCHAIN RECORDS</p>
         <h2>Transaction History</h2>

@@ -680,3 +680,57 @@ footer .copyright {
 #downloadQRBtn {
     margin-top: 10px;
 }
+
+/* CUSTOMER-ONLY VERIFICATION MODE */
+
+body.customer-mode .manufacturer-only {
+    display: none !important;
+}
+
+body.customer-mode #verify {
+    min-height: 75vh;
+    padding-top: 65px;
+}
+
+body.customer-mode #verify .section-heading {
+    margin-bottom: 30px;
+}
+
+body.customer-mode #verify .form-card {
+    max-width: 650px;
+}
+
+body.customer-mode #medicineResult,
+body.customer-mode #certificateResult {
+    text-align: left;
+}
+
+body.customer-mode footer {
+    margin-top: 30px;
+}
+
+.customer-header {
+    display: none;
+}
+
+body.customer-mode .customer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 7%;
+    background: #101d32;
+    color: white;
+}
+
+.customer-header-label {
+    color: #14c9b5;
+    font-size: 14px;
+}
+
+body.customer-mode #verifyForm {
+    display: none;
+}
+
+body.customer-mode #showCertificateBtn {
+    margin-top: 20px;
+}

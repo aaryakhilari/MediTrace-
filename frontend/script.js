@@ -1,4 +1,3 @@
-
 // ==========================================
 // MediTrace - Medicine + Certificate System
 // Ethereum Sepolia | ethers.js v6
@@ -176,7 +175,7 @@ function generateMedicineQR(batchId) {
     const baseUrl = "https://aaryakhilari.github.io/MediTrace-";
     
     const verificationUrl =
-        `${baseUrl}?batch=${encodeURIComponent(batchId)}#verify`;
+        ${baseUrl}?batch=${encodeURIComponent(batchId)}#verify;
 
     new QRCode(qrContainer, {
         text: verificationUrl,
@@ -206,7 +205,7 @@ function generateMedicineQR(batchId) {
         const link = document.createElement("a");
 
         link.href = dataUrl;
-        link.download = `MediTrace-${batchId}-QR.png`;
+        link.download = MediTrace-${batchId}-QR.png;
 
         link.click();
     };
@@ -274,7 +273,7 @@ function renderTransactionHistory() {
 
         const description = document.createElement("p");
         description.textContent =
-            `Batch ID: ${tx.batchId} | ${tx.details}`;
+            Batch ID: ${tx.batchId} | ${tx.details};
 
         const small = document.createElement("small");
         small.textContent = "Transaction Hash";
@@ -570,7 +569,7 @@ document
             saveTransaction(
                 "Manufacturer Authorization",
                 "-",
-                `${wallet} | Authorized: ${authorized}`,
+                ${wallet} | Authorized: ${authorized},
                 tx.hash
             );
 
@@ -1111,26 +1110,23 @@ if (window.ethereum) {
 
 
 // ==========================================
-// AUTO VERIFY WHEN QR CODE IS SCANNED
+// CUSTOMER QR VERIFICATION MODE
 // ==========================================
 
-const urlParams =
-    new URLSearchParams(window.location.search);
-
-const scannedBatchId =
-    urlParams.get("batch");
+const urlParams = new URLSearchParams(window.location.search);
+const scannedBatchId = urlParams.get("batch");
 
 if (scannedBatchId) {
-    document.getElementById(
-        "verifyBatchId"
-    ).value = scannedBatchId;
+    document.body.classList.add("customer-mode");
+
+    document.getElementById("verifyBatchId").value = scannedBatchId;
 
     window.addEventListener("load", function () {
-        document.getElementById("verify")
-            .scrollIntoView({ behavior: "smooth" });
+        document.getElementById("verify").scrollIntoView({
+            behavior: "smooth"
+        });
 
-        document.getElementById("verifyForm")
-            .requestSubmit();
+        document.getElementById("verifyForm").requestSubmit();
     });
 }
 
